@@ -68,17 +68,13 @@ struct Graphics {
         SDL_RenderCopy(renderer, texture, src, &dest);
     }
 
-    Mix_Music *loadMusic(const char* path) {
-        Mix_Music *gMusic = Mix_LoadMUS(path);
-        if (gMusic == nullptr) SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_ERROR, "Could not load music! SDL_mixer Error: %s", Mix_GetError());
-        return gMusic;
-    }
+    Mix_Music *loadMusic(const char* path);
 
-    void play(Mix_Music *gMusic) {
-        if (gMusic == nullptr) return;
-        if (Mix_PlayingMusic() == 0) Mix_PlayMusic( gMusic, -1 );
-        else if( Mix_PausedMusic() == 1 ) Mix_ResumeMusic();
-    }
+    void playMusic(Mix_Music *gMusic);
+
+    Mix_Chunk* loadSound(const char* path);
+
+    void playSound(Mix_Chunk* gChunk);
 
     void quit() {
         IMG_Quit();

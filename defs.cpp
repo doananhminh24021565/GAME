@@ -9,3 +9,7 @@ const char* ARCHER_SHOOT_FILE = "archer_shoot.png";
 const char* ARROW_FILE = "arrow.png";
 const char* ENEMY_FILE = "enemy_move.png";
 const char* BOOM_FILE = "boom.png";
+const char* SLASH_SOUND = "sword_slash.mp3";
+const char* SHOOT_SOUND = "bow_loading.mp3";
+const char* ARROW_SOUND = "arrow_swish.mp3";
+const char* BOOM_SOUND = "explosion.mp3";

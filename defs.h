@@ -47,8 +47,8 @@ const int BOOM_CLIPS[][4] = {
     { 700, 0, 100, 100},
 };
 
-extern const char* WINDOW_TITLE;
 extern const char* BACKGROUND_IMG;
+extern const char* WINDOW_TITLE;
 extern const char* WARRIOR_MOVE_FILE;
 extern const char* WARRIOR_SLASH_FILE;
 extern const char* ARCHER_MOVE_FILE;
@@ -56,5 +56,9 @@ extern const char* ARCHER_SHOOT_FILE;
 extern const char* ARROW_FILE;
 extern const char* ENEMY_FILE;
 extern const char* BOOM_FILE;
+extern const char* SLASH_SOUND;
+extern const char* SHOOT_SOUND;
+extern const char* ARROW_SOUND;
+extern const char* BOOM_SOUND;
 
 #endif
