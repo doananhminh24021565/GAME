@@ -7,12 +7,13 @@
 	"scrollingbackground.h"
 	"minimap.h"
 
-1746439190 e:\code\sprite\game\graphics.h
+1746491978 e:\code\sprite\game\graphics.h
 	<SDL.h>
 	<SDL_image.h>
+	<SDL_mixer.h>
 	"defs.h"
 
-1746441839 e:\code\sprite\game\defs.h
+1746452795 e:\code\sprite\game\defs.h
 
 1746413434 e:\code\sprite\game\characters.h
 	"arrow.h"
@@ -33,7 +34,7 @@
 	<cmath>
 	<utility>
 
-1746442143 e:\code\sprite\game\scrollingbackground.h
+1746452718 e:\code\sprite\game\scrollingbackground.h
 	"graphics.h"
 
 1746441108 e:\code\sprite\game\minimap.h
@@ -51,4 +52,11 @@
 	"sprite.h"
 	"scrollingbackground.h"
 	<random>
+
+1746440188 source:e:\code\sprite\game\characters.cpp
+	"characters.h"
+	<iostream>
+
+1746437465 source:e:\code\sprite\game\defs.cpp
+	"defs.h"
 

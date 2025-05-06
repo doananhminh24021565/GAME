@@ -32,7 +32,19 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="arrow.h" />
+		<Unit filename="characters.cpp" />
+		<Unit filename="characters.h" />
+		<Unit filename="defs.cpp" />
+		<Unit filename="defs.h" />
+		<Unit filename="enemies.h" />
+		<Unit filename="function.h" />
+		<Unit filename="graphics.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="minimap.h" />
+		<Unit filename="scrollingbackground.h" />
+		<Unit filename="spawnenemies.h" />
+		<Unit filename="sprite.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

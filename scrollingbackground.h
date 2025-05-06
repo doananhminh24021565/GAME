@@ -57,7 +57,6 @@ struct ScrollingBackground {
         }
     }
 
-
     void quit(){
         SDL_DestroyTexture(texture);
         texture = nullptr;
