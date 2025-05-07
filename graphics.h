@@ -12,7 +12,13 @@ struct Graphics {
 
     void logErrorAndExit(const char* msg, const char* error) {
         SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_ERROR, "%s: %s", msg, error);
+        if (renderer) SDL_DestroyRenderer(renderer);
+        if (window) SDL_DestroyWindow(window);
+        IMG_Quit();
+        Mix_CloseAudio();
+        Mix_Quit();
         SDL_Quit();
+        exit(1);
     }
 
     void init() {
@@ -24,6 +30,11 @@ struct Graphics {
 
         if (!IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG))
             logErrorAndExit("SDL_image error:", IMG_GetError());
+
+        if (Mix_Init(MIX_INIT_MP3) < 0)
+            logErrorAndExit("Mix_Init", Mix_GetError());
+        if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+            logErrorAndExit("Mix_OpenAudio", Mix_GetError());
 
         renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
         if (renderer == nullptr) logErrorAndExit("CreateRenderer", SDL_GetError());
@@ -78,11 +89,12 @@ struct Graphics {
 
     void quit() {
         IMG_Quit();
+        Mix_CloseAudio();
+        Mix_Quit();
         SDL_DestroyRenderer(renderer);
         SDL_DestroyWindow(window);
         SDL_Quit();
     }
-
 };
 
 #endif // _GRAPHICS__H

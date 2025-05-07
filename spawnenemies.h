@@ -38,7 +38,7 @@ struct SpawnEnemies {
         std::cerr << "Enemy spawned at (" << startX << ", " << startY << ")\n";
     }
 
-    void update(Characters& character, ScrollingBackground& background) {
+    void update(Characters& character, ScrollingBackground& background, Graphics& graphics) {
         float targetCenterX = character.X + characterCenterX;
         float targetCenterY = character.Y + characterCenterY;
         for (auto it = enemies.begin(); it != enemies.end();) {
@@ -54,11 +54,15 @@ struct SpawnEnemies {
                 if (distance < COLLISION_RADIUS) {
                     it->isExploding = true;
                     it->explosionStartTime = SDL_GetTicks();
+                    graphics.playSound(it->explosionSound);
+                    if (!character.health) return;
+                    else character.health -- ;
                     std::cerr << "Enemy collided with character at (" << it->X << ", " << it->Y << "), exploding, character blinking\n";
                 }
                 else if (character.type == WARRIOR && character.slash.isActing && distance < SWORD_RADIUS) {
                     it->isExploding = true;
                     it->explosionStartTime = SDL_GetTicks();
+                    graphics.playSound(it->explosionSound);
                     std::cerr << "Enemy hit by warrior slash at (" << it->X << ", " << it->Y << "), exploding\n";
                 }
                 else if (character.type == ARCHER) {
@@ -70,6 +74,7 @@ struct SpawnEnemies {
                             if (arrowDistance < COLLISION_RADIUS) {
                                 it->isExploding = true;
                                 it->explosionStartTime = SDL_GetTicks();
+                                graphics.playSound(it->explosionSound);
                                 arrow.isActive = false;
                                 std::cerr << "Enemy hit by arrow at (" << it->X << ", " << it->Y << "), exploding, arrow deactivated\n";
                                 break;

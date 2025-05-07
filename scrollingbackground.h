@@ -2,6 +2,7 @@
 #define _SCROLLINGBACKGROUND__H
 
 #include "graphics.h"
+#include <random>
 
 struct ScrollingBackground {
     SDL_Texture* texture;
@@ -10,6 +11,12 @@ struct ScrollingBackground {
     int width, height;
 
     void setTexture(SDL_Texture* _texture) {
+        static std::random_device rd;
+        static std::mt19937 gen(rd());
+        std::uniform_int_distribution<> xDist(-6040, 125);
+        std::uniform_int_distribution<> yDist(-2740, 140);
+        scrollingOffsetX = xDist(gen);
+        scrollingOffsetY = yDist(gen);
         texture = _texture;
         SDL_QueryTexture(texture, NULL, NULL, &width, &height);
         if (width < SCREEN_WIDTH || height < SCREEN_HEIGHT) {

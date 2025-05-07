@@ -32,6 +32,9 @@ void Characters::init(Graphics &graphics){
         std::cerr << "Failed to load arrow texture: " << IMG_GetError() << "\n";
         throw std::runtime_error("Texture loading failed");
     }
+    slashSound = graphics.loadSound(SLASH_SOUND);
+    shootSound = graphics.loadSound(SHOOT_SOUND);
+    arrowSound = graphics.loadSound(ARROW_SOUND);
 
     move1.init(move1Texture, MOVE_CLIPS, _frameDelay, sizeof(MOVE_CLIPS)/sizeof(int)/4);
     move2.init(move2Texture, MOVE_CLIPS, _frameDelay, sizeof(MOVE_CLIPS)/sizeof(int)/4);
@@ -39,10 +42,22 @@ void Characters::init(Graphics &graphics){
     shoot.init(shootTexture, SHOOT_CLIPS, _frameDelay, sizeof(SHOOT_CLIPS)/sizeof(int)/4);
 }
 
-void Characters::archerShoot(){
-    shoot.act();
-    SDL_GetMouseState(&mouseX, &mouseY);
-    std::cerr << "Archer shoot triggered. Mouse coordinates: (" << mouseX << ", " << mouseY << "), isActing: " << shoot.isActing << "\n";
+void Characters::warriorSlash(Graphics& graphics){
+    slash.act();
+    if (slashSound) graphics.playSound(slashSound);
+    std::cerr << "Warrior slash triggered, sound played\n";
+}
+
+void Characters::archerShoot(Graphics& graphics){
+    Uint32 currentTime = SDL_GetTicks();
+    if (currentTime - arrowCooldownStartTime >= ARROW_COOLDOWN_DURATION) {
+        shoot.act();
+        SDL_GetMouseState(&mouseX, &mouseY);
+        if (shootSound) graphics.playSound(shootSound);
+        std::cerr << "Archer shoot triggered. Mouse coordinates: (" << mouseX << ", " << mouseY << "), isActing: " << shoot.isActing << ", sound played\n";
+    } else {
+        std::cerr << "Archer shoot skipped due to cooldown. Time since last shot: " << (currentTime - arrowCooldownStartTime) << "ms\n";
+    }
 }
 
 void Characters::updateShoot(Graphics &graphics){
@@ -50,27 +65,20 @@ void Characters::updateShoot(Graphics &graphics){
     shoot.updateAct();
     std::cerr << "updateShoot: wasActing=" << wasActing << ", isActing=" << shoot.isActing << "\n";
     if (wasActing && !shoot.isActing) { // Animation vừa kết thúc
-        Uint32 currentTime = SDL_GetTicks();
-        if (currentTime - arrowCooldownStartTime >= ARROW_COOLDOWN_DURATION) {
-            Arrow arrow;
-            float distance = 21.0;
-            int mouseX, mouseY;
-            SDL_GetMouseState(&mouseX, &mouseY);
-            float centerX = X + characterCenterX;
-            float centerY = Y + characterCenterY;
-            std::pair <double, double> angle = getAngle(centerX, centerY, static_cast<float>(mouseX), static_cast<float>(mouseY));
-            float distanceX = distance * cos(angle.first);
-            float distanceY = distance * sin(angle.first);
-            float startX = (float)centerX + distanceX;
-            float startY = (float)centerY + distanceY;
-            arrow.init(graphics, startX, startY, mouseX, mouseY);
-            arrows.push_back(std::move(arrow));
-            arrowCooldownStartTime = currentTime;
-            std::cerr << "Arrow created at (" << startX << ", " << startY << ") targeting (" << mouseX << ", " << mouseY << ")\n";
-        }
-        else {
-            std::cerr << "Arrow creation skipped due to cooldown. Time since last shot: " << (currentTime - arrowCooldownStartTime) << "ms\n";
-        }
+        Arrow arrow;
+        float distance = 21.0;
+        float centerX = X + characterCenterX;
+        float centerY = Y + characterCenterY;
+        std::pair <double, double> angle = getAngle(centerX, centerY, static_cast<float>(mouseX), static_cast<float>(mouseY));
+        float distanceX = distance * cos(angle.first);
+        float distanceY = distance * sin(angle.first);
+        float startX = centerX + distanceX;
+        float startY = centerY + distanceY;
+        arrow.init(graphics, startX, startY, mouseX, mouseY);
+        arrows.push_back(std::move(arrow));
+        arrowCooldownStartTime = SDL_GetTicks();
+        if (arrowSound) graphics.playSound(arrowSound);
+        std::cerr << "Arrow created at (" << startX << ", " << startY << ") targeting (" << mouseX << ", " << mouseY << "), sound played\n";
     }
 }
 

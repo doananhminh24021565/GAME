@@ -18,6 +18,7 @@ int main(int argc, char *argv[]) {
     character.init(graphics);
 
     SpawnEnemies enemy;
+   // enemy.init();
 
     bool quit = false;
     SDL_Event e;
@@ -26,11 +27,11 @@ int main(int argc, char *argv[]) {
         int deltaX = 0, deltaY = 0;
 
         while (SDL_PollEvent(&e) != 0) {
-            if (e.type == SDL_QUIT) quit = true;
+            if (e.type == SDL_QUIT  || character.health <= 0) quit = true;
             else if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
                 cerr << "Left mouse button pressed\n";
-                if (character.type == WARRIOR) character.warriorSlash();
-                else character.archerShoot();
+                if (character.type == WARRIOR) character.warriorSlash(graphics);
+                else character.archerShoot(graphics);
             }
             else if (e.type == SDL_KEYDOWN) {
                 if (e.key.keysym.scancode == SDL_SCANCODE_F) character.boost();
@@ -62,7 +63,7 @@ int main(int argc, char *argv[]) {
 
         enemy.spawn(graphics);
 
-        enemy.update(character, background);
+        enemy.update(character, background, graphics);
 
         if (character.type == WARRIOR) {
             character.warriorMove(isMoving);

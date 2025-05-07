@@ -10,6 +10,9 @@ struct Characters {
     Sprite move1, move2, slash, shoot;
     std::vector<Arrow> arrows;
     SDL_Texture* arrowTexture;
+    Mix_Chunk* slashSound = nullptr;
+    Mix_Chunk* shootSound = nullptr;
+    Mix_Chunk* arrowSound = nullptr;
     const Uint32 BOOST_DURATION = 2000; // 2000ms
     const Uint32 BOOST_COOLDOWN_DURATION = 5000;
     Uint32 boostStartTime = 0;
@@ -18,6 +21,7 @@ struct Characters {
     Uint32 ARROW_COOLDOWN_DURATION = 200; // Giảm từ 500ms xuống 200ms
     int X = 300, Y = 200;
     int speed = 2;
+    int health = 10;
     bool isBoosting = false;
     CharacterType type = WARRIOR;
     int mouseX, mouseY;
@@ -28,11 +32,11 @@ struct Characters {
 
     void archerMove(bool isMoving) { move2.tick(isMoving); }
 
-    void warriorSlash() { slash.act(); }
+    void warriorSlash(Graphics& graphics);
 
     void updateSlash() { slash.updateAct(); }
 
-    void archerShoot();
+    void archerShoot(Graphics& graphics);
 
     void updateShoot(Graphics &graphics);
 
@@ -71,6 +75,12 @@ struct Characters {
         for (auto& arrow : arrows) {
             arrow.quit();
         }
+        if (slashSound) Mix_FreeChunk(slashSound);
+        if (shootSound) Mix_FreeChunk(shootSound);
+        if (arrowSound) Mix_FreeChunk(arrowSound);
+        slashSound = nullptr;
+        shootSound = nullptr;
+        arrowSound = nullptr;
     }
 };
 

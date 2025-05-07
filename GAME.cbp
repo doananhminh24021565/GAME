@@ -39,6 +39,7 @@
 		<Unit filename="defs.h" />
 		<Unit filename="enemies.h" />
 		<Unit filename="function.h" />
+		<Unit filename="graphics.cpp" />
 		<Unit filename="graphics.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="minimap.h" />

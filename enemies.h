@@ -3,6 +3,7 @@
 
 #include "sprite.h"
 #include "scrollingbackground.h"
+#include "defs.h"
 #include <random>
 
 struct Enemy {
@@ -11,6 +12,7 @@ struct Enemy {
     int health;
     Sprite sprite;
     Sprite explosionSprite; // Sprite cho hiệu ứng nổ
+    Mix_Chunk* explosionSound = nullptr;
     bool isActive;
     bool isExploding; // Trạng thái đang phát hiệu ứng nổ
     int lastOffsetX, lastOffsetY;
@@ -49,6 +51,8 @@ struct Enemy {
             throw std::runtime_error("Explosion texture loading failed");
         }
         explosionSprite.init(explosionTexture, BOOM_CLIPS, _explosionFrameDelay, sizeof(BOOM_CLIPS) / sizeof(int) / 4);
+
+        explosionSound = graphics.loadSound(EXPLOSION_SOUND);
     }
 
     void update(float targetX, float targetY, ScrollingBackground& background) {

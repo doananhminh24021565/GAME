@@ -12,4 +12,4 @@ const char* BOOM_FILE = "boom.png";
 const char* SLASH_SOUND = "sword_slash.mp3";
 const char* SHOOT_SOUND = "bow_loading.mp3";
 const char* ARROW_SOUND = "arrow_swish.mp3";
-const char* BOOM_SOUND = "explosion.mp3";
+const char* EXPLOSION_SOUND = "explosion.mp3";
