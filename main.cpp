@@ -11,6 +11,9 @@ int main(int argc, char *argv[]) {
     Graphics graphics;
     graphics.init();
 
+    Mix_Music *gMusic = graphics.loadMusic(BACKGROUND_MUSIC);
+    graphics.playMusic(gMusic);
+
     ScrollingBackground background;
     background.setTexture(graphics.loadTexture(BACKGROUND_IMG));
 
@@ -18,7 +21,6 @@ int main(int argc, char *argv[]) {
     character.init(graphics);
 
     SpawnEnemies enemy;
-   // enemy.init();
 
     bool quit = false;
     SDL_Event e;
@@ -27,7 +29,7 @@ int main(int argc, char *argv[]) {
         int deltaX = 0, deltaY = 0;
 
         while (SDL_PollEvent(&e) != 0) {
-            if (e.type == SDL_QUIT  || character.health <= 0) quit = true;
+            if (e.type == SDL_QUIT) quit = true;
             else if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
                 cerr << "Left mouse button pressed\n";
                 if (character.type == WARRIOR) character.warriorSlash(graphics);

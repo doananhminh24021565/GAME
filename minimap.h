@@ -19,6 +19,8 @@ void renderMiniMap(Graphics &graphic, Characters& character, SpawnEnemies& enemy
         int charPosX = (character.X - background.scrollingOffsetX) * scaleX;
         int charPosY = (character.Y - background.scrollingOffsetY) * scaleY;
 
+        std::cout << background.scrollingOffsetX << ' ' <<  background.scrollingOffsetY << '\n';
+
         SDL_SetRenderDrawColor(graphic.renderer, 255, 255, 255, 255); // Trắng
         SDL_Rect charRect = { charPosX - 2, charPosY - 2, 4, 4 }; // Chấm 4x4 pixel
         SDL_RenderFillRect(graphic.renderer, &charRect);

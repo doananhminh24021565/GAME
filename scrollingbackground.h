@@ -25,12 +25,12 @@ struct ScrollingBackground {
     }
 
     void scroll(int deltaX, int deltaY) {
-        if(scrollingOffsetX > 125) {
-            scrollingOffsetX = 125;
+        if(scrollingOffsetX > 240) {
+            scrollingOffsetX = 240;
             return;
         }
         if(scrollingOffsetY > 140) {
-            scrollingOffsetY = 140;
+            scrollingOffsetY = 150;
             return;
         }
         if(scrollingOffsetX < -6040) {

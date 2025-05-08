@@ -60,5 +60,6 @@ extern const char* SLASH_SOUND;
 extern const char* SHOOT_SOUND;
 extern const char* ARROW_SOUND;
 extern const char* EXPLOSION_SOUND;
+extern const char* BACKGROUND_MUSIC;
 
 #endif
