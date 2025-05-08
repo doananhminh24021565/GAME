@@ -4,22 +4,14 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
+#include <SDL_ttf.h>
 #include "defs.h"
 
 struct Graphics {
     SDL_Renderer *renderer;
     SDL_Window *window;
 
-    void logErrorAndExit(const char* msg, const char* error) {
-        SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_ERROR, "%s: %s", msg, error);
-        if (renderer) SDL_DestroyRenderer(renderer);
-        if (window) SDL_DestroyWindow(window);
-        IMG_Quit();
-        Mix_CloseAudio();
-        Mix_Quit();
-        SDL_Quit();
-        exit(1);
-    }
+    void logErrorAndExit(const char* msg, const char* error);
 
     void init() {
         if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -38,6 +30,8 @@ struct Graphics {
 
         renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
         if (renderer == nullptr) logErrorAndExit("CreateRenderer", SDL_GetError());
+
+        if (TTF_Init() == -1) logErrorAndExit("SDL_ttf could not initialize! SDL_ttf Error: ",TTF_GetError());
 
         SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
         SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -87,14 +81,11 @@ struct Graphics {
 
     void playSound(Mix_Chunk* gChunk);
 
-    void quit() {
-        IMG_Quit();
-        Mix_CloseAudio();
-        Mix_Quit();
-        SDL_DestroyRenderer(renderer);
-        SDL_DestroyWindow(window);
-        SDL_Quit();
-    }
+    TTF_Font* loadFont(const char* path, int size);
+
+    SDL_Texture* renderText(const char* text, TTF_Font* font, SDL_Color textColor);
+
+    void quit();
 };
 
 #endif // _GRAPHICS__H

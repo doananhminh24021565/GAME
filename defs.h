@@ -53,6 +53,7 @@ extern const char* WARRIOR_MOVE_FILE;
 extern const char* WARRIOR_SLASH_FILE;
 extern const char* ARCHER_MOVE_FILE;
 extern const char* ARCHER_SHOOT_FILE;
+extern const char* FONT_FILE;
 extern const char* ARROW_FILE;
 extern const char* ENEMY_FILE;
 extern const char* BOOM_FILE;
