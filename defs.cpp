@@ -1,6 +1,7 @@
 #include "defs.h"
 
 const char* WINDOW_TITLE = "Hello World!";
+const char* MAIN_MENU_BACKGROUND = "WoodBackground.png";
 const char* BACKGROUND_IMG = "WoodBackground(1).png";
 const char* WARRIOR_MOVE_FILE = "warrior_move.png";
 const char* WARRIOR_SLASH_FILE = "warrior_slash.png";

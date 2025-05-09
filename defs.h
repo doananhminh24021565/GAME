@@ -48,6 +48,7 @@ const int BOOM_CLIPS[][4] = {
 };
 
 extern const char* BACKGROUND_IMG;
+extern const char* MAIN_MENU_BACKGROUND;
 extern const char* WINDOW_TITLE;
 extern const char* WARRIOR_MOVE_FILE;
 extern const char* WARRIOR_SLASH_FILE;

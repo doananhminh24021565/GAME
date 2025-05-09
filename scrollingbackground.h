@@ -13,7 +13,7 @@ struct ScrollingBackground {
     void setTexture(SDL_Texture* _texture) {
         static std::random_device rd;
         static std::mt19937 gen(rd());
-        std::uniform_int_distribution<> xDist(-6040, 125);
+        std::uniform_int_distribution<> xDist(-6040, 240);
         std::uniform_int_distribution<> yDist(-2740, 140);
         scrollingOffsetX = xDist(gen);
         scrollingOffsetY = yDist(gen);
@@ -30,11 +30,11 @@ struct ScrollingBackground {
             return;
         }
         if(scrollingOffsetY > 140) {
-            scrollingOffsetY = 150;
+            scrollingOffsetY = 140;
             return;
         }
         if(scrollingOffsetX < -6040) {
-            scrollingOffsetY = -6040;
+            scrollingOffsetX = -6040;
             return;
         }
         if(scrollingOffsetY < -2740) {
