@@ -42,6 +42,7 @@
 		<Unit filename="graphics.cpp" />
 		<Unit filename="graphics.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="main_menu.h" />
 		<Unit filename="minimap.h" />
 		<Unit filename="scrollingbackground.h" />
 		<Unit filename="spawnenemies.h" />

@@ -34,7 +34,7 @@ struct MainMenu {
         SDL_QueryTexture(playText, NULL, NULL, &playRect.w, &playRect.h);
         SDL_QueryTexture(quitText, NULL, NULL, &quitRect.w, &quitRect.h);
         playRect.x = (SCREEN_WIDTH - playRect.w) / 2;
-        playRect.y = SCREEN_HEIGHT / 2 - 50;
+        playRect.y = SCREEN_HEIGHT / 2 - 75;
         quitRect.x = (SCREEN_WIDTH - quitRect.w) / 2;
         quitRect.y = SCREEN_HEIGHT / 2 + 50;
     }
