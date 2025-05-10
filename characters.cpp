@@ -69,9 +69,9 @@ void Characters::updateShoot(Graphics &graphics){
         float distance = 21.0;
         float centerX = X + characterCenterX;
         float centerY = Y + characterCenterY;
-        std::pair <double, double> angle = getAngle(centerX, centerY, static_cast<float>(mouseX), static_cast<float>(mouseY));
-        float distanceX = distance * cos(angle.first);
-        float distanceY = distance * sin(angle.first);
+        float angleRad = atan2(mouseY - centerY, mouseX - centerX);
+        float distanceX = distance * cos(angleRad);
+        float distanceY = distance * sin(angleRad);
         float startX = centerX + distanceX;
         float startY = centerY + distanceY;
         arrow.init(graphics, startX, startY, mouseX, mouseY);

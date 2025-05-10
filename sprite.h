@@ -2,7 +2,7 @@
 #define _SPRITE__H
 
 #include "graphics.h"
-#include "function.h"
+#include <cmath>
 #include <vector>
 
 struct Sprite {
@@ -48,7 +48,6 @@ struct Sprite {
         Uint32 currentTime = SDL_GetTicks();
         if (!isActing && currentTime - CooldownStartTime >= COOLDOWN_DURATION) {
             isActing = true;
-            currentFrame = 0;
             StartTime = SDL_GetTicks();
             std::cerr << "Sprite act: isActing set to true\n";
         }
@@ -79,9 +78,10 @@ struct Sprite {
         SDL_GetMouseState(&mouseX, &mouseY);
         float centerX = renderQuad.x + characterCenterX;
         float centerY = renderQuad.y + characterCenterY;
-        std::pair <double, double> angle = getAngle(centerX, centerY, static_cast<float>(mouseX), static_cast<float>(mouseY));
+        float angleRad = atan2(mouseY - centerY, mouseX - centerX);
+        float angleDeg = angleRad * (180.0 / M_PI);
         SDL_Point center = { characterCenterX, characterCenterY };
-        SDL_RenderCopyEx(graphic.renderer, texture, clip, &renderQuad, angle.second, &center, SDL_FLIP_NONE);
+        SDL_RenderCopyEx(graphic.renderer, texture, clip, &renderQuad, angleDeg, &center, SDL_FLIP_NONE);
     }
 
     void quit(){

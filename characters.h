@@ -15,10 +15,10 @@ struct Characters {
     Mix_Chunk* arrowSound = nullptr;
     const Uint32 BOOST_DURATION = 2000; // 2000ms
     const Uint32 BOOST_COOLDOWN_DURATION = 5000;
+    Uint32 ARROW_COOLDOWN_DURATION = 200; // Giảm từ 500ms xuống 200ms
     Uint32 boostStartTime = 0;
     Uint32 arrowCooldownStartTime = 0;
     Uint32 boostCooldownStartTime = 0;
-    Uint32 ARROW_COOLDOWN_DURATION = 200; // Giảm từ 500ms xuống 200ms
     int X = 300, Y = 200;
     int speed = 2;
     int health = 10;

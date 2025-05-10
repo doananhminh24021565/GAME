@@ -1,15 +1,14 @@
 #include <iostream>
 #include "graphics.h"
-#include "characters.h"
 #include "sprite.h"
 #include "scrollingbackground.h"
+#include "function.h"
 #include "minimap.h"
 #include "main_menu.h"
 
 using namespace std;
 
 // Định nghĩa trạng thái trò chơi
-enum GameState { MENU, PLAYING };
 
 int main(int argc, char *argv[]) {
     Graphics graphics;
@@ -36,88 +35,41 @@ int main(int argc, char *argv[]) {
     SDL_Event e;
     GameState gameState = MENU; // Bắt đầu ở trạng thái menu
 
+    // Khởi tạo font để hiển thị thông tin
+    TTF_Font* font = graphics.loadFont(FONT_FILE, 14);
+    SDL_Color textColor = {255, 255, 255, 255}; // Màu trắng
+
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
             if (e.type == SDL_QUIT) quit = true;
-            if (gameState == MENU) {
-                if (menu.handleEvent(e, quit)) gameState = PLAYING; // Chuyển sang trạng thái chơi
-            }
-            else if (gameState == PLAYING) {
-                if (e.type == SDL_KEYDOWN) {
-                    if (e.key.keysym.scancode == SDL_SCANCODE_ESCAPE) gameState = MENU; // Quay lại menu khi nhấn Esc
-                    else if (e.key.keysym.scancode == SDL_SCANCODE_F) character.boost();
-                    else if (e.key.keysym.scancode == SDL_SCANCODE_1) character.switchToWarrior();
-                    else if (e.key.keysym.scancode == SDL_SCANCODE_2) character.switchToArcher();
-                }
-                else if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
-                    cerr << "Left mouse button pressed\n";
-                    if (character.type == WARRIOR) character.warriorSlash(graphics);
-                    else character.archerShoot(graphics);
-                }
-            }
+            if (character.health <= 0) gameState = MENU, character.health = 10;
+            if (gameState == MENU && menu.handleEvent(e, quit)) gameState = PLAYING; // Chuyển sang trạng thái chơi
+            else if (gameState == PLAYING) handleEvent(e, character, graphics, gameState);
         }
 
         graphics.prepareScene();
 
         if (gameState == MENU) {
             menu.render(graphics);
-        }
-        else if (gameState == PLAYING) {
+        } else if (gameState == PLAYING) {
             bool isMoving = false;
-            int deltaX = 0, deltaY = 0;
-
-            const Uint8* keys = SDL_GetKeyboardState(NULL);
-            if (keys[SDL_SCANCODE_LEFT]) {
-                deltaX += character.speed;
-                isMoving = true;
-            }
-            if (keys[SDL_SCANCODE_RIGHT]) {
-                deltaX -= character.speed;
-                isMoving = true;
-            }
-            if (keys[SDL_SCANCODE_UP]) {
-                deltaY += character.speed;
-                isMoving = true;
-            }
-            if (keys[SDL_SCANCODE_DOWN]) {
-                deltaY -= character.speed;
-                isMoving = true;
-            }
-
-            background.scroll(deltaX, deltaY);
+            std::pair<int,int> delta = getDelta(character.speed, isMoving);
+            background.scroll(delta.first, delta.second);
             enemy.spawn(graphics);
             enemy.update(character, background, graphics);
-
-            if (character.type == WARRIOR) {
-                character.warriorMove(isMoving);
-                character.updateSlash();
-            } else {
-                character.archerMove(isMoving);
-                character.updateShoot(graphics);
-                character.updateArrows();
-            }
-
-            character.updateBoost();
+            updateActing(character, graphics, isMoving);
             background.render(graphics);
-
-            if (character.type == WARRIOR) {
-                if (character.slash.isActing) character.slash.render(character.X, character.Y, graphics);
-                else character.move1.render(character.X, character.Y, graphics);
-            }
-            else {
-                if (character.shoot.isActing) character.shoot.render(character.X, character.Y, graphics);
-                else character.move2.render(character.X, character.Y, graphics);
-                character.renderArrows(graphics);
-            }
-
+            Acting(character, graphics);
             enemy.render(graphics);
             renderMiniMap(graphics, character, enemy, background);
+            printText(character, graphics, font, textColor);
         }
 
         graphics.presentScene();
     }
 
     // Giải phóng tài nguyên
+    TTF_CloseFont(font);
     menu.quit();
     background.quit();
     character.quit();

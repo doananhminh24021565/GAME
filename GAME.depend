@@ -1,10 +1,10 @@
 # depslib dependency file v1.0
-1746759156 source:e:\code\sprite\game\main.cpp
+1746848384 source:e:\code\sprite\game\main.cpp
 	<iostream>
 	"graphics.h"
-	"characters.h"
 	"sprite.h"
 	"scrollingbackground.h"
+	"function.h"
 	"minimap.h"
 	"main_menu.h"
 
@@ -17,7 +17,7 @@
 
 1746759155 e:\code\sprite\game\defs.h
 
-1746581071 e:\code\sprite\game\characters.h
+1746847395 e:\code\sprite\game\characters.h
 	"arrow.h"
 	"sprite.h"
 
@@ -26,15 +26,17 @@
 	<cmath>
 	<iostream>
 
-1746439190 e:\code\sprite\game\sprite.h
+1746846868 e:\code\sprite\game\sprite.h
 	"graphics.h"
-	"function.h"
+	<cmath>
 	<vector>
 
-1746431098 e:\code\sprite\game\function.h
+1746848558 e:\code\sprite\game\function.h
 	<SDL.h>
 	<cmath>
 	<utility>
+	<iostream>
+	"characters.h"
 
 1746758757 e:\code\sprite\game\scrollingbackground.h
 	"graphics.h"
@@ -51,13 +53,13 @@
 	<random>
 	<cmath>
 
-1746580098 e:\code\sprite\game\enemies.h
+1746765822 e:\code\sprite\game\enemies.h
 	"sprite.h"
 	"scrollingbackground.h"
 	"defs.h"
 	<random>
 
-1746579226 source:e:\code\sprite\game\characters.cpp
+1746765622 source:e:\code\sprite\game\characters.cpp
 	"characters.h"
 	<iostream>
 

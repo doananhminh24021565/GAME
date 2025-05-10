@@ -105,9 +105,10 @@ struct Enemy {
             SDL_Rect renderQuad = {X, Y, clip->w, clip->h};
             float centerX = X + characterCenterX;
             float centerY = Y + characterCenterY;
-            std::pair<double, double> angle = getAngle(centerX, centerY, targetX, targetY);
+            float angleRad = atan2(targetY - centerY, targetX - centerX);
+            float angleDeg = angleRad * (180.0 / M_PI);
             SDL_Point center = {characterCenterX, characterCenterY};
-            SDL_RenderCopyEx(graphic.renderer, sprite.texture, clip, &renderQuad, angle.second, &center, SDL_FLIP_NONE);
+            SDL_RenderCopyEx(graphic.renderer, sprite.texture, clip, &renderQuad, angleDeg, &center, SDL_FLIP_NONE);
         }
     }
 
