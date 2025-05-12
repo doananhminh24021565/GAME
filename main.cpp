@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
     graphics.init();
 
     MainMenu menu;
-    menu.init(graphics, FONT_FILE, 48); // Thay bằng đường dẫn font thực tế
+    menu.init(graphics, FONT_FILE, 48);
 
     Mix_Music *gMusic = graphics.loadMusic(BACKGROUND_MUSIC);
     graphics.playMusic(gMusic);
@@ -28,16 +28,15 @@ int main(int argc, char *argv[]) {
 
     bool quit = false;
     SDL_Event e;
-    GameState gameState = MENU; // Bắt đầu ở trạng thái menu
+    GameState gameState = MENU;
 
     TTF_Font* font = graphics.loadFont(FONT_FILE, 13);
-    TTF_Font* gameOverFont = graphics.loadFont(FONT_FILE, 72); // Font lớn hơn cho Game Over
-    SDL_Color textColor = {255, 255, 255, 255}; // Màu trắng
-    SDL_Color gameOverColor = {255, 0, 0, 255}; // Màu đỏ cho Game Over
-
+    TTF_Font* gameOverFont = graphics.loadFont(FONT_FILE, 72);
+    SDL_Color textColor = {255, 255, 255, 255};
+    SDL_Color gameOverColor = {255, 0, 0, 255};
     Uint32 gameOverStartTime = 0;
     bool showGameOver = false;
-    const Uint32 GAME_OVER_DURATION = 5000; // 5 giây
+    const Uint32 GAME_OVER_DURATION = 5000;
 
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {

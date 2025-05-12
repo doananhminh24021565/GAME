@@ -1,37 +1,17 @@
 #include "characters.h"
-#include <iostream>
 
 void Characters::init(Graphics &graphics){
     slash.COOLDOWN_DURATION = 500;
     shoot.COOLDOWN_DURATION = 500;
     slash.FRAME_DURATION = 10;
-    shoot.FRAME_DURATION = 50; // 50ms mỗi frame, tổng 250ms cho 5 frames
+    shoot.FRAME_DURATION = 50;
 
     SDL_Texture* move1Texture = graphics.loadTexture(WARRIOR_MOVE_FILE);
-    if (!move1Texture) {
-        std::cerr << "Failed to load warrior move texture: " << IMG_GetError() << "\n";
-        throw std::runtime_error("Texture loading failed");
-    }
     SDL_Texture* move2Texture = graphics.loadTexture(ARCHER_MOVE_FILE);
-    if (!move2Texture) {
-        std::cerr << "Failed to load archer move texture: " << IMG_GetError() << "\n";
-        throw std::runtime_error("Texture loading failed");
-    }
     SDL_Texture* slashTexture = graphics.loadTexture(WARRIOR_SLASH_FILE);
-    if (!slashTexture) {
-        std::cerr << "Failed to load warrior slash texture: " << IMG_GetError() << "\n";
-        throw std::runtime_error("Texture loading failed");
-    }
     SDL_Texture* shootTexture = graphics.loadTexture(ARCHER_SHOOT_FILE);
-    if (!shootTexture) {
-        std::cerr << "Failed to load archer shoot texture: " << IMG_GetError() << "\n";
-        throw std::runtime_error("Texture loading failed");
-    }
     arrowTexture = graphics.loadTexture(ARROW_FILE);
-    if (!arrowTexture) {
-        std::cerr << "Failed to load arrow texture: " << IMG_GetError() << "\n";
-        throw std::runtime_error("Texture loading failed");
-    }
+
     slashSound = graphics.loadSound(SLASH_SOUND);
     shootSound = graphics.loadSound(SHOOT_SOUND);
     arrowSound = graphics.loadSound(ARROW_SOUND);
@@ -44,8 +24,7 @@ void Characters::init(Graphics &graphics){
 
 void Characters::warriorSlash(Graphics& graphics){
     slash.act();
-    if (slashSound) graphics.playSound(slashSound);
-    std::cerr << "Warrior slash triggered, sound played\n";
+    if (slashSound && slash.isActing) graphics.playSound(slashSound);
 }
 
 void Characters::archerShoot(Graphics& graphics){
@@ -54,17 +33,13 @@ void Characters::archerShoot(Graphics& graphics){
         shoot.act();
         SDL_GetMouseState(&mouseX, &mouseY);
         if (shootSound) graphics.playSound(shootSound);
-        std::cerr << "Archer shoot triggered. Mouse coordinates: (" << mouseX << ", " << mouseY << "), isActing: " << shoot.isActing << ", sound played\n";
-    } else {
-        std::cerr << "Archer shoot skipped due to cooldown. Time since last shot: " << (currentTime - arrowCooldownStartTime) << "ms\n";
     }
 }
 
 void Characters::updateShoot(Graphics &graphics){
     bool wasActing = shoot.isActing;
     shoot.updateAct();
-    std::cerr << "updateShoot: wasActing=" << wasActing << ", isActing=" << shoot.isActing << "\n";
-    if (wasActing && !shoot.isActing) { // Animation vừa kết thúc
+    if (wasActing && !shoot.isActing) {
         Arrow arrow;
         float distance = 21.0;
         float centerX = X + characterCenterX;
@@ -78,7 +53,6 @@ void Characters::updateShoot(Graphics &graphics){
         arrows.push_back(std::move(arrow));
         arrowCooldownStartTime = SDL_GetTicks();
         if (arrowSound) graphics.playSound(arrowSound);
-        std::cerr << "Arrow created at (" << startX << ", " << startY << ") targeting (" << mouseX << ", " << mouseY << "), sound played\n";
     }
 }
 

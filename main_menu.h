@@ -22,15 +22,12 @@ struct MainMenu {
         if (!font) {
             graphics.logErrorAndExit("Failed to load font", TTF_GetError());
         }
-
-        SDL_Color textColor = {255, 255, 255, 255}; // Màu trắng
+        SDL_Color textColor = {255, 255, 255, 255};
         playText = graphics.renderText("Play", font, textColor);
         quitText = graphics.renderText("Quit", font, textColor);
         if (!playText || !quitText) {
             graphics.logErrorAndExit("Failed to render text", SDL_GetError());
         }
-
-        // Căn giữa văn bản trên màn hình
         SDL_QueryTexture(playText, NULL, NULL, &playRect.w, &playRect.h);
         SDL_QueryTexture(quitText, NULL, NULL, &quitRect.w, &quitRect.h);
         playRect.x = (SCREEN_WIDTH - playRect.w) / 2;
@@ -45,11 +42,11 @@ struct MainMenu {
             int mouseY = e.button.y;
             if (mouseX >= playRect.x && mouseX <= playRect.x + playRect.w &&
                 mouseY >= playRect.y && mouseY <= playRect.y + playRect.h) {
-                return true; // Chuyển sang trạng thái chơi
+                return true;
             }
             if (mouseX >= quitRect.x && mouseX <= quitRect.x + quitRect.w &&
                 mouseY >= quitRect.y && mouseY <= quitRect.y + quitRect.h) {
-                quit = true; // Thoát chương trình
+                quit = true;
             }
         }
         return false;

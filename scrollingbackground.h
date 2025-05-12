@@ -49,13 +49,11 @@ struct ScrollingBackground {
         int texW = width;
         int texH = height;
 
-        // Tính offset đúng trong khoảng [0, texW) và [0, texH)
         int offsetX = scrollingOffsetX % texW;
         int offsetY = scrollingOffsetY % texH;
         if (offsetX > 0) offsetX -= texW;
         if (offsetY > 0) offsetY -= texH;
 
-        // Vẽ các ô nền để phủ kín màn hình
         for (int x = offsetX; x < SCREEN_WIDTH; x += texW) {
             for (int y = offsetY; y < SCREEN_HEIGHT; y += texH) {
                 SDL_Rect dest = { x, y, texW, texH };

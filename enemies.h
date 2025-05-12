@@ -11,64 +11,44 @@ struct Enemy {
     float speed;
     int health;
     Sprite sprite;
-    Sprite explosionSprite; // Sprite cho hiệu ứng nổ
+    Sprite explosionSprite;
     Mix_Chunk* explosionSound = nullptr;
     bool isActive;
-    bool isExploding; // Trạng thái đang phát hiệu ứng nổ
+    bool isExploding;
     int lastOffsetX, lastOffsetY;
-    Uint32 explosionStartTime; // Thời điểm bắt đầu nổ
-    static const Uint32 EXPLOSION_DURATION = 500; // Thời gian nổ (ms)
+    Uint32 explosionStartTime;
+    static const Uint32 EXPLOSION_DURATION = 500;
 
     void init(Graphics& graphics, float startX, float startY) {
         X = startX;
         Y = startY;
-
-        // Sinh tốc độ ngẫu nhiên trong khoảng [1, 10]
         static std::random_device rd;
         static std::mt19937 gen(rd());
-        std::uniform_real_distribution<float> speedDist(1.0f, 10.0f);
+        std::uniform_real_distribution<float> speedDist(1.0f, 3.0f);
         speed = speedDist(gen);
-
         health = 100;
         isActive = true;
         isExploding = false;
         lastOffsetX = 0;
         lastOffsetY = 0;
         explosionStartTime = 0;
-
-        // Khởi tạo sprite enemy
         SDL_Texture* texture = graphics.loadTexture(ENEMY_FILE);
-        if (!texture) {
-            std::cerr << "Failed to load enemy texture: " << IMG_GetError() << "\n";
-            throw std::runtime_error("Texture loading failed");
-        }
         sprite.init(texture, MOVE_CLIPS, _frameDelay, sizeof(MOVE_CLIPS) / sizeof(int) / 4);
-
-        // Khởi tạo sprite nổ
-        SDL_Texture* explosionTexture = graphics.loadTexture("boom.png");
-        if (!explosionTexture) {
-            std::cerr << "Failed to load explosion texture: " << IMG_GetError() << "\n";
-            throw std::runtime_error("Explosion texture loading failed");
-        }
+        SDL_Texture* explosionTexture = graphics.loadTexture(BOOM_FILE);
         explosionSprite.init(explosionTexture, BOOM_CLIPS, _explosionFrameDelay, sizeof(BOOM_CLIPS) / sizeof(int) / 4);
-
         explosionSound = graphics.loadSound(EXPLOSION_SOUND);
     }
 
     void update(float targetX, float targetY, ScrollingBackground& background) {
         if (!isActive && !isExploding) return;
-
         if (isExploding) {
-            // Cập nhật animation nổ
             explosionSprite.tick(true);
             if (SDL_GetTicks() - explosionStartTime >= EXPLOSION_DURATION) {
-                isExploding = false; // Kết thúc hiệu ứng nổ
-                isActive = false; // Đánh dấu để xóa
+                isExploding = false;
+                isActive = false;
             }
             return;
         }
-
-        // Logic di chuyển bình thường
         float centerX = X + characterCenterX;
         float centerY = Y + characterCenterY;
         float dx = targetX - centerX;
@@ -95,7 +75,6 @@ struct Enemy {
 
     void render(Graphics& graphic, int targetX, int targetY) {
         if (isExploding) {
-            // Hiển thị sprite nổ
             const SDL_Rect* clip = explosionSprite.getCurrentClip();
             SDL_Rect renderQuad = {X + 50, Y + 50, clip->w, clip->h};
             SDL_RenderCopy(graphic.renderer, explosionSprite.texture, clip, &renderQuad);

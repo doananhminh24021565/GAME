@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1746850175 source:e:\code\sprite\game\main.cpp
+1747019034 source:e:\code\sprite\game\main.cpp
 	<iostream>
 	"graphics.h"
 	"sprite.h"
@@ -15,53 +15,52 @@
 	<SDL_ttf.h>
 	"defs.h"
 
-1746759155 e:\code\sprite\game\defs.h
+1747019034 e:\code\sprite\game\defs.h
 
-1746847395 e:\code\sprite\game\characters.h
+1747021932 e:\code\sprite\game\characters.h
 	"arrow.h"
 	"sprite.h"
 
-1746416825 e:\code\sprite\game\arrow.h
+1747019034 e:\code\sprite\game\arrow.h
 	"graphics.h"
 	<cmath>
 	<iostream>
 
-1746846868 e:\code\sprite\game\sprite.h
+1747019034 e:\code\sprite\game\sprite.h
 	"graphics.h"
 	<cmath>
 	<vector>
 
-1746848558 e:\code\sprite\game\function.h
+1747021075 e:\code\sprite\game\function.h
 	<SDL.h>
 	<cmath>
 	<utility>
 	<iostream>
 	"characters.h"
 
-1746758757 e:\code\sprite\game\scrollingbackground.h
+1747018581 e:\code\sprite\game\scrollingbackground.h
 	"graphics.h"
 	<random>
 
-1746685300 e:\code\sprite\game\minimap.h
+1747019030 e:\code\sprite\game\minimap.h
 	"characters.h"
 	"spawnenemies.h"
 
-1746583993 e:\code\sprite\game\spawnenemies.h
+1747021140 e:\code\sprite\game\spawnenemies.h
 	"enemies.h"
 	"characters.h"
 	"scrollingbackground.h"
 	<random>
 	<cmath>
 
-1746765822 e:\code\sprite\game\enemies.h
+1747019034 e:\code\sprite\game\enemies.h
 	"sprite.h"
 	"scrollingbackground.h"
 	"defs.h"
 	<random>
 
-1746765622 source:e:\code\sprite\game\characters.cpp
+1747021932 source:e:\code\sprite\game\characters.cpp
 	"characters.h"
-	<iostream>
 
 1746759164 source:e:\code\sprite\game\defs.cpp
 	"defs.h"
@@ -69,6 +68,6 @@
 1746687452 source:e:\code\sprite\game\graphics.cpp
 	"graphics.h"
 
-1746850271 e:\code\sprite\game\main_menu.h
+1747019034 e:\code\sprite\game\main_menu.h
 	"graphics.h"
 

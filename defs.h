@@ -3,7 +3,7 @@
 
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
-const int _frameDelay = 80; // ms per frame
+const int _frameDelay = 80;
 const int _explosionFrameDelay = 20;
 const int characterCenterX = 100;
 const int characterCenterY = 100;

@@ -10,8 +10,8 @@
 struct SpawnEnemies {
     std::vector<Enemy> enemies;
     Uint32 enemySpawnTime = 0;
-    Uint32 ENEMY_SPAWN_INTERVAL_MIN = 1000;
-    Uint32 ENEMY_SPAWN_INTERVAL_MAX = 3000;
+    Uint32 ENEMY_SPAWN_INTERVAL_MIN = 3000;
+    Uint32 ENEMY_SPAWN_INTERVAL_MAX = 5000;
     const size_t MAX_ENEMIES = 10;
     const float COLLISION_RADIUS = 50.0f;
     const float SWORD_RADIUS = 100.0f;
@@ -35,7 +35,6 @@ struct SpawnEnemies {
         Enemy enemy;
         enemy.init(graphics, startX, startY);
         enemies.push_back(std::move(enemy));
-        std::cerr << "Enemy spawned at (" << startX << ", " << startY << ")\n";
     }
 
     void update(Characters& character, ScrollingBackground& background, Graphics& graphics) {
@@ -43,7 +42,6 @@ struct SpawnEnemies {
         float targetCenterY = character.Y + characterCenterY;
         for (auto it = enemies.begin(); it != enemies.end();) {
             it->update(targetCenterX, targetCenterY, background);
-
             if (it->isActive && !it->isExploding) {
                 float enemyCenterX = it->X + characterCenterX;
                 float enemyCenterY = it->Y + characterCenterY;
@@ -57,13 +55,12 @@ struct SpawnEnemies {
                     graphics.playSound(it->explosionSound);
                     if (!character.health) return;
                     else character.health -- ;
-                    std::cerr << "Enemy collided with character at (" << it->X << ", " << it->Y << "), exploding, character blinking\n";
                 }
                 else if (character.type == WARRIOR && character.slash.isActing && distance < SWORD_RADIUS) {
                     it->isExploding = true;
                     it->explosionStartTime = SDL_GetTicks();
                     graphics.playSound(it->explosionSound);
-                    std::cerr << "Enemy hit by warrior slash at (" << it->X << ", " << it->Y << "), exploding\n";
+                    character.score ++ ;
                 }
                 else if (character.type == ARCHER) {
                     for (auto& arrow : character.arrows) {
@@ -76,7 +73,7 @@ struct SpawnEnemies {
                                 it->explosionStartTime = SDL_GetTicks();
                                 graphics.playSound(it->explosionSound);
                                 arrow.isActive = false;
-                                std::cerr << "Enemy hit by arrow at (" << it->X << ", " << it->Y << "), exploding, arrow deactivated\n";
+                                character.score ++ ;
                                 break;
                             }
                         }
@@ -99,5 +96,4 @@ struct SpawnEnemies {
         }
     }
 };
-
 #endif

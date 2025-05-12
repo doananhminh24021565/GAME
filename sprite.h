@@ -49,7 +49,6 @@ struct Sprite {
         if (!isActing && currentTime - CooldownStartTime >= COOLDOWN_DURATION) {
             isActing = true;
             StartTime = SDL_GetTicks();
-            std::cerr << "Sprite act: isActing set to true\n";
         }
     }
 
@@ -62,7 +61,6 @@ struct Sprite {
                 isActing = false;
                 CooldownStartTime = currentTime;
                 currentFrame = 0;
-                std::cerr << "Sprite updateAct: isActing set to false\n";
             }
         }
     }

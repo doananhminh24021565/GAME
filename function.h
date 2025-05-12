@@ -7,23 +7,20 @@
 #include <iostream>
 #include "characters.h"
 
-// Định nghĩa trạng thái trò chơi
 enum GameState { MENU, PLAYING };
 
-// Lấy delta di chuyển dựa trên tốc độ và trạng thái di chuyển
 inline std::pair<int,int> getDelta(int speed, bool& isMoving) {
     int deltaX = 0, deltaY = 0;
 
     const Uint8* keys = SDL_GetKeyboardState(NULL);
-    if (keys[SDL_SCANCODE_LEFT]) deltaX += speed, isMoving = true; // Sửa dấu để di chuyển đúng hướng
+    if (keys[SDL_SCANCODE_LEFT]) deltaX += speed, isMoving = true;
     if (keys[SDL_SCANCODE_RIGHT]) deltaX -= speed, isMoving = true;
-    if (keys[SDL_SCANCODE_UP]) deltaY += speed, isMoving = true;   // Sửa dấu để di chuyển đúng hướng
+    if (keys[SDL_SCANCODE_UP]) deltaY += speed, isMoving = true;
     if (keys[SDL_SCANCODE_DOWN]) deltaY -= speed, isMoving = true;
 
     return {deltaX, deltaY};
 }
 
-// Xử lý sự kiện
 inline void handleEvent(SDL_Event& e, Characters& character, Graphics& graphics, GameState& gameState) {
     if (e.type == SDL_KEYDOWN) {
         if (e.key.keysym.scancode == SDL_SCANCODE_ESCAPE) gameState = MENU; // Quay lại menu khi nhấn Esc
@@ -32,13 +29,11 @@ inline void handleEvent(SDL_Event& e, Characters& character, Graphics& graphics,
         else if (e.key.keysym.scancode == SDL_SCANCODE_2) character.switchToArcher();
     }
     else if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
-        std::cerr << "Left mouse button pressed\n";
         if (character.type == WARRIOR) character.warriorSlash(graphics);
         else character.archerShoot(graphics);
     }
 }
 
-// Hiển thị hành động của nhân vật
 inline void Acting(Characters& character, Graphics& graphics) {
     if (character.type == WARRIOR) {
         if (character.slash.isActing) character.slash.render(character.X, character.Y, graphics);
@@ -65,29 +60,30 @@ inline void updateActing(Characters& character, Graphics& graphics, bool isMovin
 }
 
 inline void printText(Characters& character, Graphics& graphics, TTF_Font* font, SDL_Color& textColor){
-    // Hiển thị thông tin lượng máu ở góc phải trên
     std::string healthText = "Health: " + std::to_string(character.health);
     SDL_Texture* healthTexture = graphics.renderText(healthText.c_str(), font, textColor);
     graphics.renderTexture(healthTexture, SCREEN_WIDTH - 150, 10);
     SDL_DestroyTexture(healthTexture);
 
-    // Hiển thị trạng thái của slash ở góc phải trên
+    std::string scoreText = "Score: " + std::to_string(character.score);
+    SDL_Texture* scoreTexture = graphics.renderText(scoreText.c_str(), font, textColor);
+    graphics.renderTexture(scoreTexture, SCREEN_WIDTH - 150, 40);
+    SDL_DestroyTexture(scoreTexture);
+
     Uint32 currentTime = SDL_GetTicks();
     std::string slashStatus = (currentTime - character.slash.StartTime >= character.slash.COOLDOWN_DURATION) ? "Slash: Can use" : "Slash: Cannot use";
     SDL_Texture* slashTexture = graphics.renderText(slashStatus.c_str(), font, textColor);
-    graphics.renderTexture(slashTexture, SCREEN_WIDTH - 150, 40);
+    graphics.renderTexture(slashTexture, SCREEN_WIDTH - 150, 70);
     SDL_DestroyTexture(slashTexture);
 
-    // Hiển thị trạng thái của shoot ở góc phải trên
     std::string shootStatus = (currentTime - character.shoot.StartTime >= character.shoot.COOLDOWN_DURATION) ? "Shoot: Can use" : "Shoot: Cannot use";
     SDL_Texture* shootTexture = graphics.renderText(shootStatus.c_str(), font, textColor);
-    graphics.renderTexture(shootTexture, SCREEN_WIDTH - 150, 70);
+    graphics.renderTexture(shootTexture, SCREEN_WIDTH - 150, 100);
     SDL_DestroyTexture(shootTexture);
 
-    // Hiển thị trạng thái của boost ở góc phải trên
     std::string boostStatus = (!character.isBoosting && currentTime - character.boostCooldownStartTime >= character.BOOST_COOLDOWN_DURATION) ? "Boost: Can use" : "Boost: Cannot use";
     SDL_Texture* boostTexture = graphics.renderText(boostStatus.c_str(), font, textColor);
-    graphics.renderTexture(boostTexture, SCREEN_WIDTH - 150, 100);
+    graphics.renderTexture(boostTexture, SCREEN_WIDTH - 150, 130);
     SDL_DestroyTexture(boostTexture);
 }
 #endif
