@@ -23,7 +23,6 @@ int main(int argc, char *argv[]) {
 
     Characters character;
     character.init(graphics);
-
     SpawnEnemies enemy;
 
     bool quit = false;
@@ -41,7 +40,9 @@ int main(int argc, char *argv[]) {
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
             if (e.type == SDL_QUIT) quit = true;
-            if (gameState == MENU && menu.handleEvent(e, quit)) gameState = PLAYING; // Chuyển sang trạng thái chơi
+            if (gameState == MENU){
+                if (menu.handleEvent(e, quit)) gameState = PLAYING;
+            }
             else if (gameState == PLAYING) handleEvent(e, character, graphics, gameState);
         }
         graphics.prepareScene();
@@ -73,7 +74,9 @@ int main(int argc, char *argv[]) {
                     if (SDL_GetTicks() - gameOverStartTime >= GAME_OVER_DURATION) {
                         SDL_DestroyTexture(gameOverTexture);
                         showGameOver = false;
-                        character.health = 10;
+                        character.health = characterMaxHealth;
+                        character.updateScore();
+                        while(enemy.enemies.size())enemy.enemies.pop_back();
                         gameState = MENU;
                     }
                 }

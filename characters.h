@@ -20,14 +20,20 @@ struct Characters {
     Uint32 arrowCooldownStartTime = 0;
     Uint32 boostCooldownStartTime = 0;
     int X = 300, Y = 200;
+    int health = characterMaxHealth;
     int speed = 2;
-    int health = 10;
     int score = 0;
+    int highestScore = 0;
     bool isBoosting = false;
     CharacterType type = WARRIOR;
     int mouseX, mouseY;
 
     void init(Graphics& graphics);
+
+    void updateScore() {
+        highestScore = std::max(highestScore, score);
+        score = 0;
+    }
 
     void warriorMove(bool isMoving) { move1.tick(isMoving); }
 

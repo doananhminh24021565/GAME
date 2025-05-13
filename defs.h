@@ -7,6 +7,7 @@ const int _frameDelay = 80;
 const int _explosionFrameDelay = 20;
 const int characterCenterX = 100;
 const int characterCenterY = 100;
+const int characterMaxHealth = 1;
 
 const int SLASH_CLIPS[][4] = {
     {   0, 0, 200, 200}, { 200, 0, 200, 200}, { 400, 0, 200, 200}, { 600, 0, 200, 200},

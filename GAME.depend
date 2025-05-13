@@ -1,6 +1,7 @@
 # depslib dependency file v1.0
-1747019034 source:e:\code\sprite\game\main.cpp
+1747115805 source:e:\code\sprite\game\main.cpp
 	<iostream>
+	<fstream>
 	"graphics.h"
 	"sprite.h"
 	"scrollingbackground.h"
@@ -15,9 +16,9 @@
 	<SDL_ttf.h>
 	"defs.h"
 
-1747019034 e:\code\sprite\game\defs.h
+1747116411 e:\code\sprite\game\defs.h
 
-1747021932 e:\code\sprite\game\characters.h
+1747116372 e:\code\sprite\game\characters.h
 	"arrow.h"
 	"sprite.h"
 
@@ -31,7 +32,7 @@
 	<cmath>
 	<vector>
 
-1747021075 e:\code\sprite\game\function.h
+1747115573 e:\code\sprite\game\function.h
 	<SDL.h>
 	<cmath>
 	<utility>

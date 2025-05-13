@@ -65,25 +65,30 @@ inline void printText(Characters& character, Graphics& graphics, TTF_Font* font,
     graphics.renderTexture(healthTexture, SCREEN_WIDTH - 150, 10);
     SDL_DestroyTexture(healthTexture);
 
+    std::string highestScoreText = "Highest score: " + std::to_string(character.highestScore);
+    SDL_Texture* highestScoreTexture = graphics.renderText(highestScoreText.c_str(), font, textColor);
+    graphics.renderTexture(highestScoreTexture, SCREEN_WIDTH - 150, 40);
+    SDL_DestroyTexture(highestScoreTexture);
+
     std::string scoreText = "Score: " + std::to_string(character.score);
     SDL_Texture* scoreTexture = graphics.renderText(scoreText.c_str(), font, textColor);
-    graphics.renderTexture(scoreTexture, SCREEN_WIDTH - 150, 40);
+    graphics.renderTexture(scoreTexture, SCREEN_WIDTH - 150, 70);
     SDL_DestroyTexture(scoreTexture);
 
     Uint32 currentTime = SDL_GetTicks();
     std::string slashStatus = (currentTime - character.slash.StartTime >= character.slash.COOLDOWN_DURATION) ? "Slash: Can use" : "Slash: Cannot use";
     SDL_Texture* slashTexture = graphics.renderText(slashStatus.c_str(), font, textColor);
-    graphics.renderTexture(slashTexture, SCREEN_WIDTH - 150, 70);
+    graphics.renderTexture(slashTexture, SCREEN_WIDTH - 150, 100);
     SDL_DestroyTexture(slashTexture);
 
     std::string shootStatus = (currentTime - character.shoot.StartTime >= character.shoot.COOLDOWN_DURATION) ? "Shoot: Can use" : "Shoot: Cannot use";
     SDL_Texture* shootTexture = graphics.renderText(shootStatus.c_str(), font, textColor);
-    graphics.renderTexture(shootTexture, SCREEN_WIDTH - 150, 100);
+    graphics.renderTexture(shootTexture, SCREEN_WIDTH - 150, 130);
     SDL_DestroyTexture(shootTexture);
 
     std::string boostStatus = (!character.isBoosting && currentTime - character.boostCooldownStartTime >= character.BOOST_COOLDOWN_DURATION) ? "Boost: Can use" : "Boost: Cannot use";
     SDL_Texture* boostTexture = graphics.renderText(boostStatus.c_str(), font, textColor);
-    graphics.renderTexture(boostTexture, SCREEN_WIDTH - 150, 130);
+    graphics.renderTexture(boostTexture, SCREEN_WIDTH - 150, 160);
     SDL_DestroyTexture(boostTexture);
 }
 #endif
