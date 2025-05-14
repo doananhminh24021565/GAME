@@ -41,6 +41,7 @@
 		<Unit filename="function.h" />
 		<Unit filename="graphics.cpp" />
 		<Unit filename="graphics.h" />
+		<Unit filename="highestScore.txt" />
 		<Unit filename="main.cpp" />
 		<Unit filename="main_menu.h" />
 		<Unit filename="minimap.h" />

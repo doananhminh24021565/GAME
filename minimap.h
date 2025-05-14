@@ -18,7 +18,7 @@ void renderMiniMap(Graphics &graphic, Characters& character, SpawnEnemies& enemy
         float charPosY = (character.Y - background.scrollingOffsetY) * scaleY;
 
         SDL_SetRenderDrawColor(graphic.renderer, 255, 255, 255, 255);
-        SDL_Rect charRect = { charPosX - 2, charPosY - 2, 4, 4 };
+        SDL_Rect charRect = { charPosX + 2, charPosY + 2, 4, 4 };
         SDL_RenderFillRect(graphic.renderer, &charRect);
 
         SDL_SetRenderDrawColor(graphic.renderer, 255, 0, 0, 255);
@@ -26,7 +26,7 @@ void renderMiniMap(Graphics &graphic, Characters& character, SpawnEnemies& enemy
             if (it.isActive) {
                 float enemyPosX = (it.X - background.scrollingOffsetX) * scaleX;
                 float enemyPosY = (it.Y - background.scrollingOffsetY) * scaleY;
-                SDL_Rect enemyRect = { enemyPosX - 2, enemyPosY - 2, 4, 4 };
+                SDL_Rect enemyRect = { enemyPosX + 2, enemyPosY + 2, 4, 4 };
                 SDL_RenderFillRect(graphic.renderer, &enemyRect);
             }
         }
