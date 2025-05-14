@@ -46,17 +46,14 @@ struct ScrollingBackground {
     }
 
     void render(Graphics &graphic) {
-        int texW = width;
-        int texH = height;
+        int offsetX = scrollingOffsetX % width;
+        int offsetY = scrollingOffsetY % height;
+        if (offsetX > 0) offsetX -= width;
+        if (offsetY > 0) offsetY -= height;
 
-        int offsetX = scrollingOffsetX % texW;
-        int offsetY = scrollingOffsetY % texH;
-        if (offsetX > 0) offsetX -= texW;
-        if (offsetY > 0) offsetY -= texH;
-
-        for (int x = offsetX; x < SCREEN_WIDTH; x += texW) {
-            for (int y = offsetY; y < SCREEN_HEIGHT; y += texH) {
-                SDL_Rect dest = { x, y, texW, texH };
+        for (int x = offsetX; x < SCREEN_WIDTH; x += width) {
+            for (int y = offsetY; y < SCREEN_HEIGHT; y += height) {
+                SDL_Rect dest = { x, y, width, height };
                 SDL_RenderCopy(graphic.renderer, texture, NULL, &dest);
             }
         }

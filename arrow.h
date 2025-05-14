@@ -57,7 +57,8 @@ struct Arrow {
             vx = (dx / distance) * SPEED;
             vy = (dy / distance) * SPEED;
             angleDeg = std::atan2(dy, dx) * (180.0 / M_PI);
-        } else {
+        }
+        else {
             vx = SPEED;
             vy = 0;
             angleDeg = 0;
