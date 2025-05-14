@@ -1,4 +1,4 @@
-**Zoombie_Slasher**
+**Zoombie_Slayer**
 
 **Tên:** Đoàn Anh Minh 
 
